@@ -1,0 +1,12 @@
+node_modules
+.DS_Store
+dist
+.idea
+.vscode
+coverage
+build
+dist/*
+test-report.xml
+eslint-report.json
+/.scannerwork
+.vault

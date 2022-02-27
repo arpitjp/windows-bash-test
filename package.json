@@ -1,0 +1,29 @@
+{
+  "name": "windows-bash-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "prepare": "husky install",
+    "test": "cross-env TZ=UTC jest --silent",
+    "lint-local-formatting": "prettier --loglevel=error --no-error-on-unmatched-pattern --ignore-unknown -w $FILES",
+    "lint-local-code": "eslint --quiet --no-error-on-unmatched-pattern --fix $(git diff --name-only --staged | grep -E '/*.(js|jsx)$' | xargs)"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^8.10.0",
+    "eslint-config-prettier": "^8.4.0",
+    "eslint-plugin-node": "^11.1.0",
+    "husky": "^7.0.4",
+    "jest": "^27.5.1",
+    "prettier": "^2.5.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "eslint-plugin-jest": "^26.1.1"
+  }
+}

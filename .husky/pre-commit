@@ -1,0 +1,25 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+#  ========== ESLint AUTO-FIXES, PRETTIER FORMATTING ==========
+
+# saving staged file names
+STAGED_FILES=$(git diff --name-only --staged)
+
+# if no staged files, exiting with code 1 to prevent "--allow-empty-commits"
+if [[ -z "$STAGED_FILES" ]]; then
+echo "\n\n========== !! NO FILE STAGED FOR COMMIT !! ==========\n\n"
+exit 1;
+fi
+
+echo '\n\n========== Running Prettier Formatter on Staged files ==========\n\n' && \
+FILES=$STAGED_FILES npm run --silent lint-local-formatting && \
+echo '\n\n========== Running ESLint Checks on Staged (.js|.jsx) files ==========\n\n' && \
+npm run --silent lint-local-code && \
+
+# Checking if any staged file changed during node script execution (showing up as unstaged file), before making commit
+if [[ "$(git diff --name-only -- ${STAGED_FILES})" ]]; then
+echo "\n\n========== !! SOME FILES HAVE CHANGED !! - due to Prettier & ESLint auto-fixes ==========\n========== REVIEW AND STAGE THEM BEFORE MAKING THE COMMIT ==========\n\n"
+git status
+exit 1
+fi
